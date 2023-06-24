@@ -32,6 +32,17 @@ namespace social_network_be
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "social_network_be", Version = "v1" });
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllHeaders",
+                    builder =>
+                    {
+                        builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +55,7 @@ namespace social_network_be
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "social_network_be v1"));
             }
 
+            app.UseCors("AllowAllHeaders");
             app.UseHttpsRedirection();
 
             app.UseRouting();
